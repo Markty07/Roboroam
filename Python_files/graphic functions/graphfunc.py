@@ -12,7 +12,7 @@ def blitRotate(surf, image, pos, originPos, angle):
     # roatated offset from pivot to center
     rotated_offset = offset_center_to_pivot.rotate(-angle)
 
-    # roatetd image center
+    # rotated image center
     rotated_image_center = (pos[0] - rotated_offset.x, pos[1] - rotated_offset.y)
 
     # get a rotated image
