@@ -1,7 +1,7 @@
 
 
 class Player :
-    def __init__(self, model, shot, startlocation = [0, 0, 0], hp=20) : # x, y, r
+    def __init__(self, model, shot, startlocation = [0, 0, 0], hp=20) : # x, y, r (r an angle, uncapped currently)
         self.model = model
         self.shot = shot
         self.pos = startlocation
@@ -16,6 +16,15 @@ class Player :
 
     def get_fire(self) :
         return self.isfiring
+    
+    def get_shot(self) :
+        return self.shot
+    
+    def get_model(self) :
+        return self.model
+    
+    def get_pos(self) :
+        return self.pos
     
     def hp_affect(self, modifier, modifiertype=0) : # Dégâts et soins (0:normal, 1:multiply, 2:set)
         if modifiertype == 0 :
