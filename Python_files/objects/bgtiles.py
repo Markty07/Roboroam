@@ -1,11 +1,23 @@
+
+
 class BgTiles :
     def __init__(self, size, corner) :
         self.size = size # en pixel
         self.corner = corner # 0-3, top left to bottom right
-        self.position = [0, 0] # y/x position
+        self.pos= [0, 0] # y/x position
 
-    def update_pos(self, player_position) :
-        pass # nom explicatif. Utiliser modulo
+    def init_pos(self, player_position) :  # récupère position du joueur, définit position initale sur l'écran. 
+        if self.corner in [0, 1] :
+            self.pos[0] = 0
+        else :
+            self.pos[0] = self.size
+        if self.corner in [0, 2] :
+            self.pos[1] = 0
+        else :
+            self.pos[1] = self.size
 
-    def render(self, player_pos) :
-        pass # s'affiche sur l'écran.
+    def update_pos(self, movement) : # demande réflexion
+        pass
+
+    def render(self, player_pos) :  # s'affiche sur l'écran.
+        pass
