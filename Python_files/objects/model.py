@@ -1,6 +1,6 @@
 
 
-class model :
+class Model :
     def __init__(self, texture, shot_spawn_offsets = None) :
         self.texture = texture
         self.shot_spawn_offsets = shot_spawn_offsets
