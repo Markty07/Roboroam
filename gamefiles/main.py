@@ -1,5 +1,7 @@
 import pygame
-from pathlib import Path
+from functions import graphfunc as g
+from functions import movement as m
+import objects as o
 
 
 # Step 1 : Check for inputs
