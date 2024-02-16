@@ -1,4 +1,5 @@
 from random import randint
+import math
 
 class Shot :
     def __init__(self, texture, launchermodel=None, launchposition=[0,0,0], damage=1, hp=-1, speed=20) : # speed en pixels/frame
@@ -26,7 +27,9 @@ class Shot :
         return self.damage
 
     def update_pos(self) :
-        pass
+        yvar, xvar = (round(self.speed * math.sin(math.radians(self.position[3]))) * -1), (round(self.speed * math.cos(math.radians(self.position[3]))) * -1)
+        self.position[0] += xvar
+        self.position[1] += yvar
 
-    def check_collision(self, object_pos_list) :
+    def check_collision(self, object_pos_list) : # Needs a list of every damagable object
         pass
