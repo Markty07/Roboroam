@@ -1,0 +1,11 @@
+Version INFDEV 2.0
+
+Version history :
+V0 : Initial prototype. Mainly tests with pygame.
+V1 : Addition of scrolling background.
+V2 : Game architecture remade using object oriented programming. !CURRENT!
+
+Author : Markty07
+-Made on UBUNTU
+
+PS : I'm probably not going to keep this README updated, sorry about that. Enjoy the fireworks

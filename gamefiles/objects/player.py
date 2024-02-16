@@ -1,7 +1,7 @@
 
 
 class Player :
-    def __init__(self, model, shot, startlocation = [0, 0, 0], hp=20) : # x, y, r (r an angle, uncapped currently)
+    def __init__(self, model, shot, hp=20, startlocation = [0, 0, 0]) : # x, y, r (r an angle, uncapped currently)
         self.model = model
         self.shot = shot
         self.pos = startlocation

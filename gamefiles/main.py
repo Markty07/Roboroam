@@ -1,7 +1,7 @@
 import pygame
 from functions import graphfunc as g
 from functions import movement as m
-import objects as o
+from objects import bgtiles, entities, model, player, shots
 
 
 # Step 1 : Check for inputs
@@ -16,9 +16,11 @@ pygame.init()
 screen = pygame.display.set_mode((screenx,screeny))
 clock = pygame.time.Clock()
 running = True
+background = [bgtiles.BgTiles(500, 0), bgtiles.BgTiles(500, 1), bgtiles.BgTiles(500, 2), bgtiles.BgTiles(500, 3)]
+
 
 while running:
-    # poll for events
+    # Step 1
     keys = pygame.key.get_pressed()
     inputs = [0, 0, 0, 0, 0, 0, 0] # Z, S, Q, D, A, E, fire
     if keys[pygame.K_z]:
@@ -36,6 +38,16 @@ while running:
     if keys[pygame.K_f]:
         inputs[6] = 1
 
+    # Step 2
+        
+    # Step 3
+        
+    # moving BG tiles
+    
+
+    # Step 4
+        
+    # Step 5
     
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
