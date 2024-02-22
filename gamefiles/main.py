@@ -16,7 +16,11 @@ pygame.init()
 screen = pygame.display.set_mode((screenx,screeny))
 clock = pygame.time.Clock()
 running = True
-background = [bgtiles.BgTiles(500, 0), bgtiles.BgTiles(500, 1), bgtiles.BgTiles(500, 2), bgtiles.BgTiles(500, 3)]
+backGroundTiles = [bgtiles.BgTiles(500, 0), bgtiles.BgTiles(500, 1), bgtiles.BgTiles(500, 2), bgtiles.BgTiles(500, 3)]
+playerMech = player.Player(None, None) # Need placeholder for playermodel and playershot
+projectiles = [] # Holds every projectile object. Might make this a class later for easier use.
+aiEntities = [] # Holds every entity using AI
+dumbEntities = [] # Holds every entity not using AI
 
 
 while running:
@@ -43,9 +47,21 @@ while running:
     # Step 3
         
     # moving BG tiles
+    for element in backGroundTiles :
+        element.update_pos(inputs, playerMech.get_speed()) # Wow OOP is simple ;3
+        
+    # moving projectiles
+        
+    # moving AI
     
 
     # Step 4
+        
+    # check if ennemy is hit
+        
+    # check if player is hit
+        
+    # check projectiles collide
         
     # Step 5
     
