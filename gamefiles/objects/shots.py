@@ -1,7 +1,7 @@
 from random import randint
 import math
 
-class ShotBP :
+class ShotBP : # Tells to the game wich bullet to spawn
     def __init__(self, texture, damage, speed) :
         self.texture = texture
         self.damage = damage
@@ -14,6 +14,33 @@ class ShotBP :
     def get_speed(self) :
         return self.speed
     
-class Shot :
-    def __init__(self, shotbp, position) : # Position may be a list of lists, will choose a random one
-        pass
+    def set_texture(self, n) :
+        self.texture = n
+    def set_damage(self, n) :
+        self.damage = n
+    def set_speed(self, n) :
+        self.speed = n
+    
+class Shot : # Is a spawned bullet
+    def __init__(self, shotbp, position) : # Position may be a list of lists, will choose a random one. Determined from model class
+        self.texture = shotbp.get_texture()
+        self.speed = shotbp.get_speed()
+        self.damage = shotbp.get_damage()
+        if position[0] is int :
+            self.pos = position
+        else :
+            self.pos = position[randint(len(position))]
+
+    def get_texture(self) :
+        return self.texture
+    def get_damage(self) :
+        return self.damage
+    def get_speed(self) :
+        return self.speed
+    
+    def set_texture(self, n) :
+        self.texture = n
+    def set_damage(self, n) :
+        self.damage = n
+    def set_speed(self, n) :
+        self.speed = n

@@ -1,4 +1,4 @@
-
+from math import cos, sin, acos, asin
 
 class Model :
     def __init__(self, texture, shot_spawn_offsets = None) :
@@ -10,3 +10,7 @@ class Model :
     
     def get_shot_spawn_offsets(self) :
         return self.shot_spawn_offsets
+    
+    def rotate_sso(self, rotation) : # En fonction de la rotation du tireur, 
+        for element in self.shot_spawn_offsets :
+            pass
