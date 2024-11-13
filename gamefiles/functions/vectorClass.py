@@ -1,4 +1,4 @@
-from math import sqrt, cos, sin, radians
+from math import sqrt, cos, sin, radians, acos, asin, atan2
 
 class Vector :
     def __init__(self, x, y) :
@@ -32,16 +32,15 @@ class Vector :
         newY = self.vecY * factor
         return Vector(newX, newY)
     
-    def scale_to(self, desired_norm) :
+    def scaled_to(self, desired_norm) :
         # Returns a new vector, doesn't actually replace the object, because I don't want accidental replacements.
         if self.get_norm() == 0 :
             return self
         return self.multiply_with_factor(desired_norm/self.get_norm())
     
-    def relative_rotate(self, refAngle, dAngle) :
-        # Returns a new vector, that has the norm of the object and the angle that is the sum of refAngle and dAngle
-        oV = create_orientation_vector(refAngle + dAngle)
-        return oV.scale_to(self.get_norm)
+    def get_angle(self) :
+        oV = self.scaled_to(1)
+        return atan2(self.get_y, self.get_x)
 
     def __str__(self) : #j'ai oublié comment faire ça x'3
         return(str(self.vecX) + "," + str(self.vecY))

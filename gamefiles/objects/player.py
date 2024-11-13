@@ -51,11 +51,4 @@ class Player :
             self.mVector == vector
         
     def update_active_model_SSO(self) :
-        sAngle = self.pos[2]
-        refSSO = self.model.get_shot_spawn_offsets() # a list of coordinates
-        vRefSSO = []
-        for element in refSSO :
-            vRefSSO.append(v.Vector(element[0], element[1]))
-        vamSSO = []
-        for element in vRefSSO :
-            vamSSO.append(element.relative_rotate(self.pos[2]), )
+        pass
