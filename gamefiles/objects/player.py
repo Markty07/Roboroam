@@ -1,4 +1,5 @@
-
+# from model import Model
+from ..functions import vectorClass as v
 
 class Player :
     def __init__(self, model, shot, speed=4, hp=20, startlocation = [0, 0, 0]) : # x, y, r (r an angle, uncapped currently)
@@ -8,14 +9,16 @@ class Player :
         self.isfiring = False
         self.hp = hp
         self.speed = speed
+        self.mVector = None
+        self.active_model_SSO = None
 
-    def move(self, inputs=[0,0,0,0,0,0]) : # Z,S,Q,D,A,E
+    def move(self, inputs=[0,0,0,0,0,0,0]) : # Z,S,Q,D,A,E,F
         pass
 
-    def update_fire(self, inputs=0) :
-        self.isfiring = bool(inputs)
+    def update_fire(self, inputs=[0,0,0,0,0,0,0]) :
+        self.isfiring = bool(inputs[6])
 
-    def get_fire(self) :
+    def get_firing(self) :
         return self.isfiring
     
     def get_shot(self) :
@@ -40,3 +43,19 @@ class Player :
 
     def get_hp(self) :
         return self.hp
+    
+    def sGet_mVector(self, vector) :
+        if vector == None :
+            return self.mVector
+        else :
+            self.mVector == vector
+        
+    def update_active_model_SSO(self) :
+        sAngle = self.pos[2]
+        refSSO = self.model.get_shot_spawn_offsets() # a list of coordinates
+        vRefSSO = []
+        for element in refSSO :
+            vRefSSO.append(v.Vector(element[0], element[1]))
+        vamSSO = []
+        for element in vRefSSO :
+            vamSSO.append(element.relative_rotate(self.pos[2]), )

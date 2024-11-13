@@ -1,7 +1,7 @@
 from random import randint
 import math
 
-class ShotBP : # Tells to the game wich bullet to spawn
+class ShotBP : # Tells to the game which bullet to spawn
     def __init__(self, texture, damage, speed) :
         self.texture = texture
         self.damage = damage

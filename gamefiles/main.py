@@ -1,6 +1,7 @@
 import pygame
 from functions import graphfunc as g
 from functions import movement as m
+from functions import vectorClass as v
 from objects import bgtiles, entities, model, player, shots
 
 
@@ -17,16 +18,26 @@ screen = pygame.display.set_mode((screenx,screeny))
 clock = pygame.time.Clock()
 running = True
 backGroundTiles = [bgtiles.BgTiles(500, 0), bgtiles.BgTiles(500, 1), bgtiles.BgTiles(500, 2), bgtiles.BgTiles(500, 3)]
-playerMech = player.Player(None, None) # Need placeholder for playermodel and playershot
+for element in backGroundTiles : element.init_pos((500, 500))
+backGroundTilesTexture = pygame.image.load("textures/Bgwar1.png")
+
+playerMechTexture = pygame.image.load("textures/Onset Mk1.png")
+playerModel = model.Model(playerMechTexture)
+playerMech = player.Player(playerModel, None, speed=2) # Need placeholder for playermodel and playershot
+playerMechShot = shots.ShotBP(pygame.image.load("textures/Onset Bullet.png"), 20, 6)
+
 projectiles = [] # Holds every projectile object. Might make this a class later for easier use.
 aiEntities = [] # Holds every entity using AI
 dumbEntities = [] # Holds every entity not using AI
 
 
 while running:
+
+    # screen.fill("blue")
+
     # Step 1
     keys = pygame.key.get_pressed()
-    inputs = [0, 0, 0, 0, 0, 0, 0] # Z, S, Q, D, A, E, fire
+    inputs = [0, 0, 0, 0, 0, 0, 0] # Z, S, Q, D, A, E, Fire (space)
     if keys[pygame.K_z]:
         inputs[0] = 1
     if keys[pygame.K_s]:
@@ -39,17 +50,37 @@ while running:
         inputs[4] = 1
     if keys[pygame.K_e]:
         inputs[5] = 1
-    if keys[pygame.K_f]:
+    if keys[pygame.K_SPACE]:
         inputs[6] = 1
 
+    # Step 1.5
+
+    # tVector = v.create_orientation_vector(playerMech.get_pos()[2])
+    # print(tVector)
+
     # Step 2
-        
+    
+    # spawn player shots
+    # blip blup
+
+
     # Step 3
-        
+
+    # Create player vector, POV and UMV (player orientation vector, universal movement vector)
+    POV = v.create_orientation_vector(playerMech.get_pos()[2])
+    pVx = inputs[3] - inputs[2]
+    pVy = inputs[1] - inputs[0]
+    player_vector = v.Vector(pVx, pVy)
+    player_vector = player_vector.scale_to(playerMech.get_speed())
+    UMV = player_vector.multiply_with_factor(-1)
     # moving BG tiles
     for element in backGroundTiles :
-        element.update_pos(inputs, playerMech.get_speed()) # Wow OOP is simple ;3
-        
+        element.vUpdate_pos(UMV)
+    # rotate player
+    if inputs[4] == 1 :
+        playerMech.pos[2] += 2
+    if inputs[5] == 1 :
+        playerMech.pos[2] -= 2    
     # moving projectiles
         
     # moving AI
@@ -64,16 +95,19 @@ while running:
     # check projectiles collide
         
     # Step 5
+    #    render background
+    for element in backGroundTiles :
+        g.blitRotate(screen, backGroundTilesTexture, element.get_pos(), (0,0), 0)
+    #    render player
+    g.blitRotate(screen, playerMech.model.get_texture(), (250, 250), (16, 16), playerMech.pos[2])
+
     
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill('green')
-
-    # RENDER YOUR GAME HERE
+    # RENDER YOUR GAME HERE # NO ! :3
 
     # flip() the display to put your work on screen
     pygame.display.flip()
