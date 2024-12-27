@@ -14,30 +14,6 @@ class Vector :
     def get_norm(self) :
         return sqrt(self.vecX**2+self.vecY**2)
     
-    def sum_with(self, vector2) :
-        # additionne deux vecteurs et retoure un nouveau vecteur. NE REMPLACE PAS L'OBJET SUR LEQUEL CETTE FONCTION EST UTILISEE
-        newX = self.vecX + vector2.get_x()
-        newY = self.vecY + vector2.get_y()
-        return Vector(newX, newY)
-    
-    def multiply_with(self, vector2) :
-        # Does not update the object this method is used with, it returns a new one.
-        newX = self.vecX * vector2.get_x()
-        newY = self.vecY * vector2.get_y()
-        return Vector(newX, newY)   
-    
-    def multiply_with_factor(self, factor) :
-        # Does not update the object this method is used with, it returns a new one.
-        newX = self.vecX * factor
-        newY = self.vecY * factor
-        return Vector(newX, newY)
-    
-    def scaled_to(self, desired_norm) :
-        # Returns a new vector, doesn't actually replace the object, because I don't want accidental replacements.
-        if self.get_norm() == 0 :
-            return self
-        return self.multiply_with_factor(desired_norm/self.get_norm())
-    
     def get_angle(self) :
         oV = self.scaled_to(1)
         return atan2(self.get_y, self.get_x)
@@ -50,20 +26,25 @@ def create_orientation_vector(angle) :
     oVector = Vector(-cos(angle), -sin(angle))
     return oVector
 
+def sum_vectors(vec1, vec2) :
+    # additionne deux vecteurs et retoure un nouveau vecteur.
+    newX = vec1.vecX + vec2.get_x()
+    newY = vec1.vecY + vec2.get_y()
+    return Vector(newX, newY)
+
+def multiply_vectors(vec1, vec2) :
+    newX = vec1.vecX * vec2.get_x()
+    newY = vec1.vecY * vec2.get_y()
+    return Vector(newX, newY)
+
+def multiply_vector_with_factor(vec1, f) :
+    newX = vec1.vecX * f
+    newY = vec1.vecY * f
+    return Vector(newX, newY)
+
+def scale_vector_to(vec1, n) :
+    if vec1.get_norm() == 0 :
+        return vec1
+    return vec1.multiply_with_factor(n/vec1.get_norm())
 
 # Tests
-
-
-vecteurA = Vector(2, 3)
-vecteurB = Vector(5, 4)
-
-'''
-vecteurC = vecteurA.sum_with(vecteurB)
-print(vecteurC)
-vecteurD = vecteurA.multiply_with(vecteurB)
-print(vecteurD)
-vecteurE = vecteurA.multiply_with_factor(2)
-print(vecteurE)
-'''
-
-print(vecteurA.scale_to(50))
