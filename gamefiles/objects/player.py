@@ -1,5 +1,5 @@
 # from model import Model
-from ..functions import vectorClass as v
+# from ..functions import vectorClass as v
 
 class Player :
     def __init__(self, model, shot, speed=4, hp=20, startlocation = [0, 0, 0]) : # x, y, r (r an angle, uncapped currently)

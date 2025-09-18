@@ -71,8 +71,8 @@ while running:
     pVx = inputs[3] - inputs[2]
     pVy = inputs[1] - inputs[0]
     player_vector = v.Vector(pVx, pVy)
-    player_vector = player_vector.scaled_to(playerMech.get_speed())
-    UMV = player_vector.multiply_with_factor(-1)
+    player_vector = v.scale_vector_to(player_vector, playerMech.get_speed())
+    UMV = v.multiply_vector_with_factor(player_vector, -1)
     # moving BG tiles
     for element in backGroundTiles :
         element.vUpdate_pos(UMV)

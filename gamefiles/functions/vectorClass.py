@@ -45,6 +45,6 @@ def multiply_vector_with_factor(vec1, f) :
 def scale_vector_to(vec1, n) :
     if vec1.get_norm() == 0 :
         return vec1
-    return vec1.multiply_with_factor(n/vec1.get_norm())
+    return multiply_vector_with_factor(vec1, n/vec1.get_norm())
 
 # Tests
