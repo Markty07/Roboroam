@@ -2,7 +2,7 @@ import pygame
 import math
 import random
 
-# Stolen on the internet
+# Stolen on the internet. Runs the whole game.
 def blitRotate(surf, image, pos, originPos, angle):
 
     # offset from pivot to center

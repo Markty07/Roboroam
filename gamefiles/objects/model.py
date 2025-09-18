@@ -1,5 +1,8 @@
 from math import cos, sin, acos, asin
 
+# Every entity has a model that combnes texture, shot spawn offsets, stats. It will replace the player class
+# (and player class will be changed to control a model)
+
 class Model : # shot_spawn_offsets are [x,y]
     def __init__(self, texture, shot_spawn_offsets = None) :
         self.texture = texture

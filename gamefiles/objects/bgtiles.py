@@ -35,7 +35,8 @@ class BgTiles :
             if self.pos[0] > self.size :
                 self.pos[0] -= 2*self.size
 
-    def vUpdate_pos(self, UMV) : #Universal Movement Vector
+    def vUpdate_pos(self, UMV) : # Uses the Universal Movement Vector to move the tile. and teleports the tiles back on screen when OOB
+        # Responsible for the scrolling background
         self.pos[1] += UMV.get_y()
         self.pos[0] += UMV.get_x()
         if self.pos[1] > self.size :
