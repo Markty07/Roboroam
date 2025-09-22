@@ -1,7 +1,7 @@
 import pygame
-from functions import graphfunc as g
-from functions import movement as m
-from functions import vectorClass as v
+from objects import graphfunc as g
+from objects import movement as m
+from objects import vectorClass as v
 from objects import bgtiles, entities, model, player, shots
 
 
@@ -14,17 +14,17 @@ from objects import bgtiles, entities, model, player, shots
 
 screenx, screeny = 500, 500
 pygame.init()
-screen = pygame.display.set_mode((screenx,screeny))
+screen = pygame.display.set_mode((screenx,screeny), pygame.RESIZABLE)
 clock = pygame.time.Clock()
 running = True
 backGroundTiles = [bgtiles.BgTiles(500, 0), bgtiles.BgTiles(500, 1), bgtiles.BgTiles(500, 2), bgtiles.BgTiles(500, 3)]
 for element in backGroundTiles : element.init_pos((500, 500))
 backGroundTilesTexture = pygame.image.load("textures/Bgwar1.png")
 
-playerMechTexture = pygame.image.load("textures/Onset Mk1.png")
+playerMechTexture = pygame.image.load("textures/Onset_Mech.png")
 playerModel = model.Model(playerMechTexture)
 playerMech = player.Player(playerModel, None, speed=2) # Need placeholder for playermodel and playershot
-playerMechShot = shots.ShotBP(pygame.image.load("textures/Onset Bullet.png"), 20, 6)
+# Here goes bullets
 
 projectiles = [] # Holds every projectile object. Might make this a class later for easier use.
 aiEntities = [] # Holds every entity using AI

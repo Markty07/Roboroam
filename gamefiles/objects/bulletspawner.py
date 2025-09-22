@@ -1,0 +1,44 @@
+from math import cos, sin, radians
+import vectorClass as v
+
+class BulletBP :
+    def __init__(self, texture, speed, damage, pellets) :
+        self.texture = texture
+        self.speed = speed
+        self.damage = damage
+        self.pellets = pellets
+
+defaultbullet = BulletBP("textures/shot_1.png", 1, 1, 1)
+
+class Bulletspawner :
+    def __init__(self, initialpos = (0, 0, 0), initialspeed = v.Vector(0, 0), relpos = (0, 0, 0), credit = (0, "default.owner", "default.weapon"), bulletBP = defaultbullet) :
+        # What does a bulletspawner need to know :
+        # Parent position : Parent will summon the Bulletspawner each frame
+        # Angle of the parent object : Parent will transmit
+        # Parent velocity vector : Parent will transmit
+        # Bullet stats and texture : In object creation
+        # Relative position : Needs to know where to be summoned.
+        # Relative angle : Last value of relpos in degrees.
+        # Bullet team and owner : Do not kill friendlies, credit killer.
+        # Bullet count
+        self.pos = [0, 0, 0]
+        self.pos[2] = (relpos[2] + initialpos[2])%360 # We need bullet properly oriented
+        self.speed = initialspeed
+        # Let's do math to determine the absolute position of the spawner
+        angleRad = radians(initialpos[2])
+        self.pos[0] = -cos(angleRad)*relpos[0] + initialpos[0]
+        self.pos[1] = -sin(angleRad)*relpos[1] + initialpos[1]
+
+
+class Bullet :
+    def __init__(self, pos = [0, 0, 0], vector = v.Vector(0, 0), credit = (0, "missing.owner", "missing.weapon"), bulletBP = defaultbullet) :
+        # Only needs to move forward every frame
+        self.pos = pos # Third value is angle in degrees.
+        self.vector = vector
+        self.team = credit
+        self.texture = bulletBP.texture
+        self.damage = bulletBP.damage
+
+    def cycle(self) :
+        self.pos[0] += self.vector.get_x()
+        self.pos[1] += self.vector.get_y()
