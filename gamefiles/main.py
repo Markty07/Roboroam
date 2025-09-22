@@ -1,8 +1,8 @@
 import pygame
-from objects import graphfunc as g
+from objects import bullets, graphfunc as g
 from objects import movement as m
 from objects import vectorClass as v
-from objects import bgtiles, entities, model, player, shots
+from objects import bgtiles, entities, model, player, bullets
 
 
 # Step 1 : Check for inputs
@@ -27,6 +27,7 @@ playerMech = player.Player(playerModel, None, speed=2) # Need placeholder for pl
 # Here goes bullets
 
 projectiles = [] # Holds every projectile object. Might make this a class later for easier use.
+spawners = [] # This list gets cleared each frame
 aiEntities = [] # Holds every entity using AI
 dumbEntities = [] # Holds every entity not using AI
 
@@ -60,8 +61,31 @@ while running:
 
     # Step 2
     
-    # spawn player shots
+    # spawn player spawners. Temporary testing code
+    if inputs[6] == 1 :
+        spawners.append(bullets.Bulletspawner((250, 250, playerMech.pos[2]), player_vector, relpos = (-20, 0, 0)))
+        spawners.append(bullets.Bulletspawner((250, 250, playerMech.pos[2]), player_vector, relpos = (20, 0, 0)))
+    # spawn player shots using spawners. Temporary testing code
+    for spawn in spawners :
+        assert type(spawn) == bullets.Bulletspawner
+        projectiles.append(bullets.Bullet(spawn.pos, spawn.speed, (1, "Player", "TestWeapon"))) # using defaultbullet
+
+
     # blip blup
+
+    # Step 2.9 : Despawn stuff
+    spawners = []
+    projlen = len(projectiles)
+    i = 0
+    while i < projlen:
+        # print("Checking projectiles")
+        assert type(projectiles[i]) == bullets.Bullet
+        if projectiles[i].lifetime < 1 :
+            projectiles.pop(i)
+            i -= 1
+            projlen -= 1
+        i += 1
+    print(clock)
 
 
     # Step 3
@@ -81,8 +105,13 @@ while running:
         playerMech.pos[2] += 2
     if inputs[5] == 1 :
         playerMech.pos[2] -= 2    
+    
     # moving projectiles
-        
+    for shot in projectiles :
+        assert type(shot) == bullets.Bullet
+        shot.cycle()
+
+
     # moving AI
     
 
@@ -100,7 +129,11 @@ while running:
         g.blitRotate(screen, backGroundTilesTexture, element.get_pos(), (0,0), 0)
     #    render player
     g.blitRotate(screen, playerMech.model.get_texture(), (250, 250), (16, 16), playerMech.pos[2])
-
+    #    render projectiles
+    for shot in projectiles :
+        assert type(shot) == bullets.Bullet
+        g.blitRotate(screen, pygame.image.load(shot.texture), (shot.pos[0], shot.pos[1]), (1,5), shot.pos[2])
+        # Horrible code; Loads the same image multiple times in memory. Thank god it's only 2.10 pixels.
     
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():

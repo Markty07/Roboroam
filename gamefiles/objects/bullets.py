@@ -1,5 +1,5 @@
 from math import cos, sin, radians
-import vectorClass as v
+from objects import vectorClass as v
 
 class BulletBP :
     def __init__(self, texture, speed, damage, pellets) :
@@ -8,7 +8,7 @@ class BulletBP :
         self.damage = damage
         self.pellets = pellets
 
-defaultbullet = BulletBP("textures/shot_1.png", 1, 1, 1)
+defaultbullet = BulletBP("textures/shot_1.png", 10, 1, 1)
 
 class Bulletspawner :
     def __init__(self, initialpos = (0, 0, 0), initialspeed = v.Vector(0, 0), relpos = (0, 0, 0), credit = (0, "default.owner", "default.weapon"), bulletBP = defaultbullet) :
@@ -21,14 +21,17 @@ class Bulletspawner :
         # Relative angle : Last value of relpos in degrees.
         # Bullet team and owner : Do not kill friendlies, credit killer.
         # Bullet count
+        self.bpspeed = bulletBP.speed
         self.pos = [0, 0, 0]
         self.pos[2] = (relpos[2] + initialpos[2])%360 # We need bullet properly oriented
-        self.speed = initialspeed
         # Let's do math to determine the absolute position of the spawner
         angleRad = radians(initialpos[2])
-        self.pos[0] = -cos(angleRad)*relpos[0] + initialpos[0]
+        self.pos[0] = cos(angleRad)*relpos[0] + initialpos[0]
         self.pos[1] = -sin(angleRad)*relpos[1] + initialpos[1]
-
+        # adding the bulletBP speed
+        self.speed = v.create_orientation_vector(initialpos[2]+relpos[2])
+        self.speed = v.multiply_vector_with_factor(self.speed, self.bpspeed)
+        self.speed = v.sum_vectors(self.speed, initialspeed)
 
 class Bullet :
     def __init__(self, pos = [0, 0, 0], vector = v.Vector(0, 0), credit = (0, "missing.owner", "missing.weapon"), bulletBP = defaultbullet) :
@@ -38,7 +41,9 @@ class Bullet :
         self.team = credit
         self.texture = bulletBP.texture
         self.damage = bulletBP.damage
+        self.lifetime = 30
 
     def cycle(self) :
         self.pos[0] += self.vector.get_x()
         self.pos[1] += self.vector.get_y()
+        self.lifetime -= 1
