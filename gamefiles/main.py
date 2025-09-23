@@ -4,6 +4,7 @@ from objects import movement as m
 from objects import vectorClass as v
 from objects import bgtiles, entities, model, player, bullets
 
+# Step -1 : Load textures
 
 # Step 1 : Check for inputs
 # Step 1.5 : Cheats
@@ -21,7 +22,9 @@ backGroundTiles = [bgtiles.BgTiles(500, 0), bgtiles.BgTiles(500, 1), bgtiles.BgT
 for element in backGroundTiles : element.init_pos((500, 500))
 backGroundTilesTexture = pygame.image.load("textures/Bgwar1.png")
 
+playerBulletTexture = pygame.image.load("textures/shot_1.png")
 playerMechTexture = pygame.image.load("textures/Onset_Mech.png")
+
 playerModel = model.Model(playerMechTexture)
 playerMech = player.Player(playerModel, None, speed=2) # Need placeholder for playermodel and playershot
 # Here goes bullets
@@ -109,7 +112,7 @@ while running:
     # moving projectiles
     for shot in projectiles :
         assert type(shot) == bullets.Bullet
-        shot.cycle()
+        shot.cycle(UMV)
 
 
     # moving AI
@@ -132,7 +135,7 @@ while running:
     #    render projectiles
     for shot in projectiles :
         assert type(shot) == bullets.Bullet
-        g.blitRotate(screen, pygame.image.load(shot.texture), (shot.pos[0], shot.pos[1]), (1,5), shot.pos[2])
+        g.blitRotate(screen, playerBulletTexture, (shot.pos[0], shot.pos[1]), (1,5), shot.pos[2])
         # Horrible code; Loads the same image multiple times in memory. Thank god it's only 2.10 pixels.
     
     # pygame.QUIT event means the user clicked X to close your window
@@ -141,6 +144,8 @@ while running:
             running = False
 
     # RENDER YOUR GAME HERE # NO ! :3
+    # Testing
+    g.blitRotate(screen, pygame.image.load("textures/OldMan_Mech.png"), (50,50), (16,16), 0)
 
     # flip() the display to put your work on screen
     pygame.display.flip()

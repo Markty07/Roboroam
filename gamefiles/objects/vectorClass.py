@@ -27,12 +27,12 @@ class Vector :
 
 def create_orientation_vector(angle) : # Creates a vector thanks to an angle that should be of norm 1
     angle = radians(angle)
-    oVector = Vector(-cos(angle), -sin(angle))
+    oVector = Vector(cos(angle), -sin(angle))
     return oVector
 
 def sum_vectors(vec1, vec2) : # Adds two vectors together
-    newX = vec1.vecX + vec2.get_x()
-    newY = vec1.vecY + vec2.get_y()
+    newX = vec1.vecX + vec2.vecX
+    newY = vec1.vecY + vec2.vecY
     return Vector(newX, newY)
 
 def multiply_vectors(vec1, vec2) : # Multiplies two vectors together

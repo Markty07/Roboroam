@@ -25,11 +25,11 @@ class Bulletspawner :
         self.pos = [0, 0, 0]
         self.pos[2] = (relpos[2] + initialpos[2])%360 # We need bullet properly oriented
         # Let's do math to determine the absolute position of the spawner
-        angleRad = radians(initialpos[2])
-        self.pos[0] = cos(angleRad)*relpos[0] + initialpos[0]
-        self.pos[1] = -sin(angleRad)*relpos[1] + initialpos[1]
+        angleRad = radians((initialpos[2]))
+        self.pos[0] = -cos(angleRad) + initialpos[0] + (-cos(angleRad)*relpos[0])
+        self.pos[1] = sin(angleRad) + initialpos[1] + (sin(angleRad)*relpos[1])
         # adding the bulletBP speed
-        self.speed = v.create_orientation_vector(initialpos[2]+relpos[2])
+        self.speed = v.create_orientation_vector(initialpos[2]+relpos[2]+90)
         self.speed = v.multiply_vector_with_factor(self.speed, self.bpspeed)
         self.speed = v.sum_vectors(self.speed, initialspeed)
 
@@ -43,7 +43,8 @@ class Bullet :
         self.damage = bulletBP.damage
         self.lifetime = 30
 
-    def cycle(self) :
-        self.pos[0] += self.vector.get_x()
-        self.pos[1] += self.vector.get_y()
+    def cycle(self, UMV) :
+        assert type(UMV) == v.Vector
+        self.pos[0] += self.vector.vecX + UMV.vecX
+        self.pos[1] += self.vector.vecY + UMV.vecY
         self.lifetime -= 1
